@@ -7,9 +7,12 @@ typedef unsigned long long U64;
 // Define the amount of squares the board should have
 #define BRD_SQ_NUM 120
 
+#define MAXGAMEMOVES 2048
+
 // Pieces values
 // w represents white and b black
 enum { EMPTY, wP, wN, wB, wR, wQ, wK, bP, bN, bB, bR, bQ, bK };
+
 // Define files and ranks
 enum { FILE_A, FILE_B, FILE_C, FILE_D, FILE_E, FILE_F, FILE_G, FILE_NONE };
 enum { RANK_1, RANK_2, RANK_3, RANK_4, RANK_5, RANK_6, RANK_7, RANK_8, RANK_NONE };
@@ -31,6 +34,24 @@ enum {
 
 enum { FALSE, TRUE };
 
+// Each castling permission is represented in an array of 4 bits
+// In which 0 is an affirmative permission and 1 a negative one
+// i. e.
+// 1 0 0 1
+// This means that white King side castling and black Queen side castling are both unavaiable
+enum { WKCA = 1, WQCA = 2, BKCA = 4, BQCA = 8 };
+
+// Store crucial information to be able to undo moves
+typedef struct {
+
+  int move;
+  int castlePerm;
+  int enPas;
+  int fiftyMove;
+  U64 posKey;
+  
+} S_UNDO;
+  
 typedef struct {
 
   int pieces[BRD_SQ_NUM];
@@ -47,6 +68,9 @@ typedef struct {
   int ply;
   int hisPly;
 
+  // Set castle permission
+  int castlePerm;
+
   // Unique key generated for each position
   U64 posKey;
 
@@ -56,6 +80,8 @@ typedef struct {
   int majPce[3];
   int minPce[3];
 
-}S_BOARD;
+  S_UNDO history[MAXGAMEMOVES];
+
+} S_BOARD;
 
 #endif
