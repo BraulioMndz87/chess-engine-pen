@@ -1,2 +1,2 @@
 all:
-	gcc ./src/pen.c -o ./build/pen
+	gcc ./src/pen.c ./src/init.c -o ./build/pen
