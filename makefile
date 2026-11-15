@@ -1,2 +1,2 @@
 all:
-	gcc ./src/vice.c -o ./build/vice
+	gcc ./src/pen.c -o ./build/pen
