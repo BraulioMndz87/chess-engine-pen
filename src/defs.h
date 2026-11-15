@@ -14,7 +14,7 @@ typedef unsigned long long U64;
 enum { EMPTY, wP, wN, wB, wR, wQ, wK, bP, bN, bB, bR, bQ, bK };
 
 // Define files and ranks
-enum { FILE_A, FILE_B, FILE_C, FILE_D, FILE_E, FILE_F, FILE_G, FILE_NONE };
+enum { FILE_A, FILE_B, FILE_C, FILE_D, FILE_E, FILE_F, FILE_G, FILE_H, FILE_NONE };
 enum { RANK_1, RANK_2, RANK_3, RANK_4, RANK_5, RANK_6, RANK_7, RANK_8, RANK_NONE };
 
 // Possible colors in the game
@@ -36,7 +36,7 @@ enum { FALSE, TRUE };
 
 // Each castling permission is represented in an array of 4 bits
 // In which 0 is an affirmative permission and 1 a negative one
-// i. e.
+// e. g.
 // 1 0 0 1
 // This means that white King side castling and black Queen side castling are both unavaiable
 enum { WKCA = 1, WQCA = 2, BKCA = 4, BQCA = 8 };
@@ -83,5 +83,20 @@ typedef struct {
   S_UNDO history[MAXGAMEMOVES];
 
 } S_BOARD;
+
+/* MACROS */
+
+// Converts the file and rank to the BRD_SQ_NUM[120] array based number for that square
+#define FR2SQ(f, r) ( (21 + (f) ) + ( (r) * 10 ) )
+
+/* GLOBALS */
+
+// Pass the 120 square board array to 64 and viceversa
+extern int Sq120ToSq64[BRD_SQ_NUM];
+extern int Sq64ToSq120[64];
+
+/* FUNCTIONS */
+
+extern void AllInit();
 
 #endif
